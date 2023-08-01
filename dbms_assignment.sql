@@ -120,6 +120,34 @@ create index prod_price on product ("price");
 
 create index order_details_id on order_details ("ordered_user_id");
 
+alter table user_details rename to user_detail;
+alter table order_details rename to "order";
+
+alter table "order" alter column count type int;
+alter table order_product alter column count type int;
+
+create table public."product_category" ("created_at" TIMESTAMP not null default now(),
+"updated_at" TIMESTAMP not null default now(),
+"deleted_at" TIMESTAMP,
+"id" uuid not null default uuid_generate_v4(),
+"category" character varying not null,
+constraint "PK_cat" primary key ("id"));
+
+INSERT INTO public.product_category
+(category)
+VALUES('Appliances'),
+('Books'),
+('Clothes'),
+('Electronics'),
+('Footwear'),
+('Grocery');
+
+alter table product add column product_category_id uuid;
+
+update public.product set product_category_id = 'aab5aafd-f108-4ac9-a10e-ec6c112c41bb' where "product category" = 'Electronics';
+update public.product set product_category_id = '59b1285e-6d78-4a02-863f-40197237f34f' where "product category" = 'Clothes';
+update public.product set product_category_id = 'e6535155-c403-4b89-a52b-ce8c50f4a7f8' where "product category" = 'Footwear';
+
 
 
 
